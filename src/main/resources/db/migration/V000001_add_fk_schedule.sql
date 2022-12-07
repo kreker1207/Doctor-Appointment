@@ -1,0 +1,3 @@
+ALTER TABLE schedule
+ADD CONSTRAINT SCHEDULE_FK
+FOREIGN KEY (doctor_id) REFERENCES doctor(id);

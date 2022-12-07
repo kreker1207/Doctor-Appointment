@@ -1,0 +1,7 @@
+CREATE TABLE doctor(
+id SERIAL PRIMARY KEY ,
+name VARCHAR(35) NOT NULL ,
+surname VARCHAR(35) NOT NULL ,
+specialization VARCHAR(40) NOT NULL ,
+phone VARCHAR(20) UNIQUE NOT NULL
+);
