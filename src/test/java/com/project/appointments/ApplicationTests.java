@@ -1,4 +1,4 @@
-package com.project.SCHL;
+package com.project.appointments;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
