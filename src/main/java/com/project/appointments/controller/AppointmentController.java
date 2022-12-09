@@ -36,7 +36,7 @@ public class AppointmentController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Appointment addAppointment(Appointment appointment) {
+  public Appointment addAppointment(@RequestBody Appointment appointment) {
     return appointmentService.addAppointment(appointment);
   }
 

@@ -36,7 +36,7 @@ public class PersonController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Person addPerson(Person person) {
+  public Person addPerson(@RequestBody Person person) {
     return personService.addPerson(person);
   }
 

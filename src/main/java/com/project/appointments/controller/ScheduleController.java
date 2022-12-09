@@ -37,7 +37,7 @@ public class ScheduleController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Schedule addSchedule(Schedule schedule) {
+  public Schedule addSchedule(@RequestBody Schedule schedule) {
     return scheduleService.addSchedule(schedule);
   }
 
