@@ -30,7 +30,7 @@ public class Appointment {
   @Column(name = "end_time")
   private LocalTime endTime;
   @Enumerated(value = EnumType.STRING)
-  @Column(name = "ticket_status")
+  @Column(name = "status")
   private AppointmentStatus status;
   @Column(name = "person_id")
   private Long personId;

@@ -3,6 +3,6 @@ CREATE TABLE appointment(
     schedule_id BIGINT NOT NULL ,
     start_time TIME NOT NULL ,
     end_time TIME NOT NULL,
-    ticket_status VARCHAR(12),
+    status VARCHAR(12),
     person_id BIGINT
 );
