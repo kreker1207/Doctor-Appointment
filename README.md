@@ -37,7 +37,7 @@ This project is allows doctors to generate their schedule for three days ahead a
 * `localhost:8080/v1/doctor/{id}` -ths request deletes doctor by id in a path variable
 #### PUT Mapping:
 * `localhost:8080/v1/doctor/{id}` - this requests updates doctor by set fields in a request body and doctor's id in a path 
-![Doctor's Json template](./documentation/DoctorJson.png)
+##### <div align="center"> ![DoctorJson](./documentation/DoctorJson.PNG)</div>
 ###### <div align="center">Doctor's Json template</div>
 ### Person's API:
 #### GET Mapping:
@@ -49,7 +49,7 @@ This project is allows doctors to generate their schedule for three days ahead a
 * `localhost:8080/v1/person/{id}` -ths request deletes person by id in a path variable
 #### PUT Mapping:
 * `localhost:8080/v1/person/{id}` - this requests updates person by set fields in a request body and doctor's id in a path 
-![Person's Json template](./documentation/PersonJson.png)
+##### <div align="center"> ![Person's Json template](./documentation/PersonJson.PNG)</div>
 ###### <div align="center">Person's Json template</div>
 
 ### Appointment's API:
@@ -63,7 +63,7 @@ This project is allows doctors to generate their schedule for three days ahead a
 #### PUT Mapping:
 * `localhost:8080/v1/appointment/{id}` - this requests updates appointment by set fields in a request body and doctor's id in a path 
 * `localhost:8080/v1/appointment/reserve/{id}` - this request presenting one of the main ideas of this application to reserve appointment by sending phone number as a `String` in request body and id of appointment as a path variable 
-![Appointment's Json template](./documentation/AppointmentJson.png)
+##### <div align="center"> ![Appointment's Json template](./documentation/AppointmentJson.PNG)</div>
 ###### <div align="center">Appointment's Json template</div>
 ### Schedule's API:
 #### GET Mapping:
@@ -77,5 +77,5 @@ This project is allows doctors to generate their schedule for three days ahead a
 * `localhost:8080/v1/schedule/{id}` -ths request deletes schedule by id in a path variable
 #### PUT Mapping:
 * `localhost:8080/v1/schedule/{id}` - this requests updates schedule by set fields in a request body and doctor's id in a path 
-![Schedule's Json template](./documentation/ScheduleJson.png)
+##### <div align="center"> ![Schedule's Json template](./documentation/ScheduleJson.PNG)</div>
 ###### <div align="center">Schedule's Json template</div>
