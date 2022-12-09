@@ -4,5 +4,5 @@ CREATE TABLE appointment(
     start_time TIME NOT NULL ,
     end_time TIME NOT NULL,
     status VARCHAR(12),
-    user_id BIGINT
+    person_id BIGINT
 );
