@@ -1,4 +1,4 @@
-package com.project.appointments.entity;
+package com.project.appointments.model.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

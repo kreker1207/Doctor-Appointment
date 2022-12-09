@@ -1,4 +1,4 @@
-package com.project.appointments.entity;
+package com.project.appointments.model.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,6 +29,6 @@ public class Person {
   @Column(name = "phone")
   private String phone;
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "person_id")
   List<Appointment> appointments;
 }

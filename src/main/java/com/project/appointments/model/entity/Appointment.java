@@ -1,7 +1,10 @@
-package com.project.appointments.entity;
+package com.project.appointments.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,12 +23,15 @@ public class Appointment {
   private Long id;
   @Column(name = "schedule_id")
   private Long scheduleId;
+  @JsonFormat(pattern = "HH:mm")
   @Column(name = "start_time")
   private LocalTime startTime;
+  @JsonFormat(pattern = "HH:mm")
   @Column(name = "end_time")
   private LocalTime endTime;
+  @Enumerated(value = EnumType.STRING)
   @Column(name = "ticket_status")
   private AppointmentStatus status;
-  @Column(name = "user_id")
-  private Long userId;
+  @Column(name = "person_id")
+  private Long personId;
 }
