@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/appointment")
+@RequestMapping("/v1/appointments")
 public class AppointmentController {
 
   private final AppointmentService appointmentService;

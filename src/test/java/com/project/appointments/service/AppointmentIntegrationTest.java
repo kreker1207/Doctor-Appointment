@@ -51,8 +51,8 @@ public class AppointmentIntegrationTest {
 
   @Test
   @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2020-12-13')")
-  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, ticket_status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
-  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, ticket_status, person_id)  VALUES (2,1,'12:00','12:30','AVAILABLE',null)")
+  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
+  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, status, person_id)  VALUES (2,1,'12:00','12:30','AVAILABLE',null)")
   void getAppointments() {
     List<Appointment> foundAppointment = appointmentService.getAppointments();
     assertEquals(2, appointmentH2Repository.findAll().size());
@@ -62,7 +62,7 @@ public class AppointmentIntegrationTest {
 
   @Test
   @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2020-12-13')")
-  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, ticket_status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
+  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
   void deleteAppointment() {
     assertEquals(1, appointmentService.getAppointments().size());
     appointmentService.deleteAppointment(1L);
@@ -71,7 +71,7 @@ public class AppointmentIntegrationTest {
 
   @Test
   @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2020-12-13')")
-  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, ticket_status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
+  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
   void updateAppointment() {
     assertEquals(LocalTime.of(8, 30), appointmentService.getAppointment(1L).getEndTime());
     appointmentService.updateAppointment(new Appointment().setEndTime(LocalTime.of(8, 40)), 1L);
@@ -81,7 +81,7 @@ public class AppointmentIntegrationTest {
   @Test
   @Sql(statements = "INSERT INTO person (id, name, surname, phone) VALUES (1,'Ivan','Kerzhov','+289456')")
   @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2020-12-13')")
-  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, ticket_status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
+  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
   void reserveAppointment() {
     assertEquals(AppointmentStatus.AVAILABLE, appointmentService.getAppointment(1L).getStatus());
     appointmentService.reserveAppointment(1L, "+289456");
