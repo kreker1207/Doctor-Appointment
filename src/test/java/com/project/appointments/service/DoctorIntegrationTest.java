@@ -32,7 +32,7 @@ public class DoctorIntegrationTest {
 
   @Test
   void createDoctor() {
-    Doctor doctor = new Doctor().setId(1L).setName("Ivan").setSurname("Baranetskiy")
+    Doctor doctor = new Doctor().setId(1L).setFirstName("Ivan").setLastName("Baranetskiy")
         .setPhone("+123456").setSpecialization("Orthopeadic");
     assertEquals(0, doctorH2Repository.findAll().size());
     doctorService.addDoctor(doctor);
@@ -41,7 +41,7 @@ public class DoctorIntegrationTest {
 
   @Test
   void getDoctor() {
-    Doctor doctor = new Doctor().setId(1L).setName("Ivan").setSurname("Baranetskiy")
+    Doctor doctor = new Doctor().setId(1L).setFirstName("Ivan").setLastName("Baranetskiy")
         .setPhone("+1234567").setSpecialization("Orthopeadic");
     doctorService.addDoctor(doctor);
     assertEquals(1, doctorService.getDoctors().size());
@@ -50,8 +50,8 @@ public class DoctorIntegrationTest {
   }
 
   @Test
-  @Sql(statements = "INSERT INTO doctor (id, name, surname, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
-  @Sql(statements = "INSERT INTO doctor (id, name, surname, specialization, phone)  VALUES (2,'Vitaliy','Yorkshir','Orthopeadic','+487916')")
+  @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
+  @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (2,'Vitaliy','Yorkshir','Orthopeadic','+487916')")
   void getDoctors() {
     List<Doctor> foundDoctor = doctorService.getDoctors();
     assertEquals(2, doctorH2Repository.findAll().size());
@@ -60,7 +60,7 @@ public class DoctorIntegrationTest {
   }
 
   @Test
-  @Sql(statements = "INSERT INTO doctor (id, name, surname, specialization, phone)  VALUES (1,'Vitaliy','Yorkshir','Orthopeadic','+487916')")
+  @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Vitaliy','Yorkshir','Orthopeadic','+487916')")
   void deleteDoctor() {
     assertEquals(1, doctorService.getDoctors().size());
     doctorService.deleteDoctor(1L);
@@ -68,11 +68,11 @@ public class DoctorIntegrationTest {
   }
 
   @Test
-  @Sql(statements = "INSERT INTO doctor (id, name, surname, specialization, phone)  VALUES (1,'Vitaliy','Yorkshir','Orthopeadic','+487916')")
+  @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Vitaliy','Yorkshir','Orthopeadic','+487916')")
   void updateDoctor() {
-    assertEquals("Vitaliy", doctorService.getDoctor(1L).getName());
-    doctorService.updateDoctor(new Doctor().setName("Boris"), 1L);
-    assertEquals("Boris", doctorService.getDoctor(1L).getName());
+    assertEquals("Vitaliy", doctorService.getDoctor(1L).getFirstName());
+    doctorService.updateDoctor(new Doctor().setFirstName("Boris").setLastName("Yorkshir").setSpecialization("Orthopeadic").setPhone("+487916"), 1L);
+    assertEquals("Boris", doctorService.getDoctor(1L).getFirstName());
 
   }
 

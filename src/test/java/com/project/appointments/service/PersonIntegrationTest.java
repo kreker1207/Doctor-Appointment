@@ -32,7 +32,7 @@ public class PersonIntegrationTest {
 
   @Test
   void createPerson() {
-    Person person = new Person().setId(1L).setName("Ivan").setSurname("Baranetskiy")
+    Person person = new Person().setId(1L).setFirstName("Ivan").setLastName("Baranetskiy")
         .setPhone("+123456");
     assertEquals(0, personH2Repository.findAll().size());
     personService.addPerson(person);
@@ -41,7 +41,7 @@ public class PersonIntegrationTest {
 
   @Test
   void getPerson() {
-    Person person = new Person().setId(1L).setName("Ivan").setSurname("Baranetskiy")
+    Person person = new Person().setId(1L).setFirstName("Ivan").setLastName("Baranetskiy")
         .setPhone("+1234567");
     personService.addPerson(person);
     assertEquals(1, personService.getPeople().size());
@@ -50,17 +50,17 @@ public class PersonIntegrationTest {
   }
 
   @Test
-  @Sql(statements = "INSERT INTO person (id, name, surname, phone) VALUES (1,'Iven','Baranetskyi','+1234567')")
-  @Sql(statements = "INSERT INTO person (id, name, surname, phone) VALUES (2,'Kiril','Andrush','+654879')")
+  @Sql(statements = "INSERT INTO person (id, first_name, last_name, phone) VALUES (1,'Iven','Baranetskyi','+1234567')")
+  @Sql(statements = "INSERT INTO person (id, first_name, last_name, phone) VALUES (2,'Kiril','Andrush','+654879')")
   void getPeople() {
     List<Person> foundPeople = personService.getPeople();
     assertEquals(2, personH2Repository.findAll().size());
     assertEquals(2, foundPeople.size());
-    assertEquals("Kiril", foundPeople.get(1).getName());
+    assertEquals("Kiril", foundPeople.get(1).getFirstName());
   }
 
   @Test
-  @Sql(statements = "INSERT INTO person (id, name, surname, phone) VALUES (1,'Iven','Baranetskyi','+1234567')")
+  @Sql(statements = "INSERT INTO person (id, first_name, last_name, phone) VALUES (1,'Iven','Baranetskyi','+1234567')")
   void deletePerson() {
     assertEquals(1, personService.getPeople().size());
     personService.deletePerson(1L);
@@ -68,11 +68,11 @@ public class PersonIntegrationTest {
   }
 
   @Test
-  @Sql(statements = "INSERT INTO person (id, name, surname, phone) VALUES (1,'Iven','Baranetskyi','+1234567')")
+  @Sql(statements = "INSERT INTO person (id, first_name, last_name, phone) VALUES (1,'Iven','Baranetskyi','+1234567')")
   void updatePerson() {
-    assertEquals("Iven", personService.getPerson(1L).getName());
-    personService.updatePerson(new Person().setName("Boris"), 1L);
-    assertEquals("Boris", personService.getPerson(1L).getName());
+    assertEquals("Iven", personService.getPerson(1L).getFirstName());
+    personService.updatePerson(new Person().setFirstName("Boris").setLastName("Baranetskyi").setPhone("+1234567"), 1L);
+    assertEquals("Boris", personService.getPerson(1L).getFirstName());
 
   }
 

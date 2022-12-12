@@ -28,7 +28,7 @@ public class DoctorService {
   public Doctor updateDoctor(Doctor doctor, Long id) {
     Doctor saveDoctor = findDoctorById(id);
     return doctorRepository.save(
-        saveDoctor.setName(doctor.getName()).setSurname(doctor.getSurname())
+        saveDoctor.setFirstName(doctor.getFirstName()).setLastName(doctor.getLastName())
             .setPhone(doctor.getPhone()).setSpecialization(doctor.getSpecialization()));
   }
 

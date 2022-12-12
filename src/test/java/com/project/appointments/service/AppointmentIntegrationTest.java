@@ -33,16 +33,20 @@ public class AppointmentIntegrationTest {
   }
 
   @Test
+  @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2020-12-13')")
   void createAppointment() {
-    Appointment appointment = new Appointment().setId(1L);
+    Appointment appointment = new Appointment().setId(1L).setStartTime(LocalTime.of(8, 0))
+        .setEndTime(LocalTime.of(8, 30)).setStatus(AppointmentStatus.AVAILABLE).setScheduleId(1L);
     assertEquals(0, appointmentH2Repository.findAll().size());
     appointmentService.addAppointment(appointment);
     assertEquals(1, appointmentH2Repository.findAll().size());
   }
 
   @Test
+  @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2020-12-13')")
   void getAppointment() {
-    Appointment appointment = new Appointment().setId(1L);
+    Appointment appointment = new Appointment().setId(1L).setStartTime(LocalTime.of(8, 0))
+        .setEndTime(LocalTime.of(8, 30)).setStatus(AppointmentStatus.AVAILABLE).setScheduleId(1L);
     appointmentService.addAppointment(appointment);
     assertEquals(1, appointmentService.getAppointments().size());
     Appointment foundAppointment = appointmentService.getAppointment(1L);
@@ -74,12 +78,12 @@ public class AppointmentIntegrationTest {
   @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
   void updateAppointment() {
     assertEquals(LocalTime.of(8, 30), appointmentService.getAppointment(1L).getEndTime());
-    appointmentService.updateAppointment(new Appointment().setEndTime(LocalTime.of(8, 40)), 1L);
+    appointmentService.updateAppointment(new Appointment().setStartTime(LocalTime.of(8,0)).setEndTime(LocalTime.of(8,40)).setStatus(AppointmentStatus.AVAILABLE).setScheduleId(1L), 1L);
     assertEquals(LocalTime.of(8, 40), appointmentService.getAppointment(1L).getEndTime());
   }
 
   @Test
-  @Sql(statements = "INSERT INTO person (id, name, surname, phone) VALUES (1,'Ivan','Kerzhov','+289456')")
+  @Sql(statements = "INSERT INTO person (id, first_name, last_name, phone) VALUES (1,'Ivan','Kerzhov','+289456')")
   @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2020-12-13')")
   @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
   void reserveAppointment() {

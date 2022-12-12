@@ -77,7 +77,7 @@ public class ScheduleIntegrationTest {
   }
 
   @Test
-  @Sql(statements = "INSERT INTO doctor (id, name, surname, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
+  @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeDaysMonday() {
     assertEquals(0, scheduleService.getSchedule().size());
     scheduleService.generateScheduleForThreeDaysTest(1L,
@@ -90,7 +90,7 @@ public class ScheduleIntegrationTest {
   }
 
   @Test
-  @Sql(statements = "INSERT INTO doctor (id, name, surname, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
+  @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeThursday() {
     assertEquals(0, scheduleService.getSchedule().size());
     scheduleService.generateScheduleForThreeDaysTest(1L,
@@ -103,7 +103,7 @@ public class ScheduleIntegrationTest {
   }
 
   @Test
-  @Sql(statements = "INSERT INTO doctor (id, name, surname, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
+  @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeFriday() {
     assertEquals(0, scheduleService.getSchedule().size());
     scheduleService.generateScheduleForThreeDaysTest(1L,
@@ -116,7 +116,7 @@ public class ScheduleIntegrationTest {
   }
 
   @Test
-  @Sql(statements = "INSERT INTO doctor (id, name, surname, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
+  @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeSaturday() {
     assertEquals(0, scheduleService.getSchedule().size());
     scheduleService.generateScheduleForThreeDaysTest(1L,
@@ -129,7 +129,7 @@ public class ScheduleIntegrationTest {
   }
 
   @Test
-  @Sql(statements = "INSERT INTO doctor (id, name, surname, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
+  @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeSunday() {
     assertEquals(0, scheduleService.getSchedule().size());
     scheduleService.generateScheduleForThreeDaysTest(1L,
