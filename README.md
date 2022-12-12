@@ -29,53 +29,53 @@ This project is allows doctors to generate their schedule for three days ahead a
 ## Api
 ### Doctor's API:
 #### GET Mapping:
- * `localhost:8080/v1/doctor` - this request returns all doctors from database
- * `localhost:8080/v1/doctor/{id}` - this request returns specified doctor by id as a path variable
+ * `localhost:8080/v1/doctors` - this request returns all doctors from database
+ * `localhost:8080/v1/doctors/{id}` - this request returns specified doctor by id as a path variable
 #### POST Mapping:
-* `localhost:8080/v1/doctor` - this request saves doctor from request body and returns saved entity
+* `localhost:8080/v1/doctors` - this request saves doctor from request body and returns saved entity
 #### DELETE Mapping:
-* `localhost:8080/v1/doctor/{id}` -ths request deletes doctor by id in a path variable
+* `localhost:8080/v1/doctors/{id}` -ths request deletes doctor by id in a path variable
 #### PUT Mapping:
-* `localhost:8080/v1/doctor/{id}` - this requests updates doctor by set fields in a request body and doctor's id in a path 
+* `localhost:8080/v1/doctors/{id}` - this requests updates doctor by set fields in a request body and doctor's id in a path 
 ##### <div align="center"> ![DoctorJson](./documentation/DoctorJson.PNG)</div>
 ###### <div align="center">Doctor's Json template</div>
 ### Person's API:
 #### GET Mapping:
- * `localhost:8080/v1/person` - this request returns all people from database
- * `localhost:8080/v1/person/{id}` - this request returns specified person by id as a path variable
+ * `localhost:8080/v1/people` - this request returns all people from database
+ * `localhost:8080/v1/people/{id}` - this request returns specified person by id as a path variable
 #### POST Mapping:
-* `localhost:8080/v1/person` - this request saves person from request body and returns saved entity
+* `localhost:8080/v1/people` - this request saves person from request body and returns saved entity
 #### DELETE Mapping:
-* `localhost:8080/v1/person/{id}` -ths request deletes person by id in a path variable
+* `localhost:8080/v1/people/{id}` -ths request deletes person by id in a path variable
 #### PUT Mapping:
-* `localhost:8080/v1/person/{id}` - this requests updates person by set fields in a request body and doctor's id in a path 
+* `localhost:8080/v1/people/{id}` - this requests updates person by set fields in a request body and doctor's id in a path 
 ##### <div align="center"> ![Person's Json template](./documentation/PersonJson.PNG)</div>
 ###### <div align="center">Person's Json template</div>
 
 ### Appointment's API:
 #### GET Mapping:
- * `localhost:8080/v1/appointment` - this request returns all appointment from database
- * `localhost:8080/v1/appointment/{id}` - this request returns specified appointment by id as a path variable
+ * `localhost:8080/v1/appointments` - this request returns all appointment from database
+ * `localhost:8080/v1/appointments/{id}` - this request returns specified appointment by id as a path variable
 #### POST Mapping:
-* `localhost:8080/v1/appointment` - this request saves appointment from request body and returns saved entity
+* `localhost:8080/v1/appointments` - this request saves appointment from request body and returns saved entity
 #### DELETE Mapping:
-* `localhost:8080/v1/appointment/{id}` -ths request deletes appointment by id in a path variable
+* `localhost:8080/v1/appointments/{id}` -ths request deletes appointment by id in a path variable
 #### PUT Mapping:
-* `localhost:8080/v1/appointment/{id}` - this requests updates appointment by set fields in a request body and doctor's id in a path 
-* `localhost:8080/v1/appointment/reserve/{id}` - this request presenting one of the main ideas of this application to reserve appointment by sending phone number as a `String` in request body and id of appointment as a path variable 
+* `localhost:8080/v1/appointments/{id}` - this requests updates appointment by set fields in a request body and doctor's id in a path 
+* `localhost:8080/v1/appointments/reserve/{id}` - this request presenting one of the main ideas of this application to reserve appointment by sending phone number as a `String` in request body and id of appointment as a path variable 
 ##### <div align="center"> ![Appointment's Json template](./documentation/AppointmentJson.PNG)</div>
 ###### <div align="center">Appointment's Json template</div>
 ### Schedule's API:
 #### GET Mapping:
- * `localhost:8080/v1/schedule` - this request returns all schedules from database
- * `localhost:8080/v1/schedule/{id}` - this request returns specified schedule by id as a path variable
+ * `localhost:8080/v1/schedules` - this request returns all schedules from database
+ * `localhost:8080/v1/schedules/{id}` - this request returns specified schedule by id as a path variable
 #### POST Mapping:
-* `localhost:8080/v1/schedule` - this request saves schedule from request body and returns saved entity
-* `localhost:8080/v1/schedule/generate/{id}` - this request implementing the main feature of this API to generate schedule for 3 days avoid weekends and creating appointments from 8am to 4pm by sending doctor's id as a path variable
-* `localhost:8080/v1/schedule/generate/test/{id}` - this request needed only for manual testing generating of schedules by sending id of doctor as a path variable and any date in request body 
+* `localhost:8080/v1/schedules` - this request saves schedule from request body and returns saved entity
+* `localhost:8080/v1/schedules/generate/{id}` - this request implementing the main feature of this API to generate schedule for 3 days avoid weekends and creating appointments from 8am to 4pm by sending doctor's id as a path variable
+* `localhost:8080/v1/schedules/generate/test/{id}` - this request needed only for manual testing generating of schedules by sending id of doctor as a path variable and any date in request body 
 #### DELETE Mapping:
-* `localhost:8080/v1/schedule/{id}` -ths request deletes schedule by id in a path variable
+* `localhost:8080/v1/schedules/{id}` -ths request deletes schedule by id in a path variable
 #### PUT Mapping:
-* `localhost:8080/v1/schedule/{id}` - this requests updates schedule by set fields in a request body and doctor's id in a path 
+* `localhost:8080/v1/schedules/{id}` - this requests updates schedule by set fields in a request body and doctor's id in a path 
 ##### <div align="center"> ![Schedule's Json template](./documentation/ScheduleJson.PNG)</div>
 ###### <div align="center">Schedule's Json template</div>
