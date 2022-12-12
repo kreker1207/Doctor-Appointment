@@ -1,0 +1,3 @@
+ALTER TABLE appointment
+    ADD CONSTRAINT APPOINTMENT_PERSON_FK
+        FOREIGN KEY (person_id) REFERENCES person (id);
