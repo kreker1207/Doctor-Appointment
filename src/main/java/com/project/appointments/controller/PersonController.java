@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/persons")
+@RequestMapping("/v1/people")
 @RequiredArgsConstructor
 public class PersonController {
 
