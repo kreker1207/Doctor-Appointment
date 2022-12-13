@@ -53,9 +53,9 @@ public class AppointmentController {
     return appointmentService.updateAppointment(appointment, id);
   }
 
-  @PutMapping("/reserve/{id}")
+  @PutMapping("/reserve/{id}/{personId}")
   @ResponseStatus(HttpStatus.OK)
-  public Appointment reserveAppointment(@RequestBody String personPhone, @PathVariable Long id) {
-    return appointmentService.reserveAppointment(id, personPhone);
+  public Appointment reserveAppointment(@PathVariable Long id,@PathVariable Long personId) {
+    return appointmentService.reserveAppointment(id, personId);
   }
 }

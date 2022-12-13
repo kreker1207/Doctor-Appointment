@@ -84,11 +84,11 @@ public class AppointmentIntegrationTest {
 
   @Test
   @Sql(statements = "INSERT INTO person (id, first_name, last_name, phone) VALUES (1,'Ivan','Kerzhov','+289456')")
-  @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2020-12-13')")
-  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, status, person_id)  VALUES (1,1,'08:00','08:30','AVAILABLE',null)")
+  @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2088-12-13')")
+  @Sql(statements = "INSERT INTO appointment (id, schedule_id, start_time, end_time, status, person_id)  VALUES (1,1,'23:00','23:30','AVAILABLE',null)")
   void reserveAppointment() {
     assertEquals(AppointmentStatus.AVAILABLE, appointmentService.getAppointment(1L).getStatus());
-    appointmentService.reserveAppointment(1L, "+289456");
+    appointmentService.reserveAppointment(1L, 1L);
     assertEquals(1, appointmentService.getAppointment(1L).getPersonId());
     assertEquals(AppointmentStatus.RESERVED, appointmentService.getAppointment(1L).getStatus());
 

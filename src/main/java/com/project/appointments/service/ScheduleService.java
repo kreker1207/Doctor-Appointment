@@ -47,8 +47,11 @@ public class ScheduleService {
   private void scheduleSaveCycle(LocalDate date,Long doctorId){
     for(int i = 0; i<3;i++){
       date = weekendValidation(date);
-      Schedule schedule = scheduleRepository.save(new Schedule().setDate(date)).setDoctorId(doctorId);
-      appointmentService.generateAppointmentsForDay(schedule.getId());
+      if (scheduleRepository.findByDoctorIdAndDate(doctorId,date).isEmpty()) {
+        Schedule schedule = scheduleRepository.save(new Schedule().setDate(date))
+            .setDoctorId(doctorId);
+        appointmentService.generateAppointmentsForDay(schedule.getId());
+      }
       date = date.plusDays(1);
     }
   }

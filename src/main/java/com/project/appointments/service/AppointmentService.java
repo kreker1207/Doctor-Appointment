@@ -4,9 +4,12 @@ import com.project.appointments.exception.AppointmentAlreadyReserved;
 import com.project.appointments.model.entity.Appointment;
 import com.project.appointments.model.entity.AppointmentStatus;
 import com.project.appointments.model.entity.Person;
+import com.project.appointments.model.entity.Schedule;
 import com.project.appointments.repository.AppointmentRepository;
 import com.project.appointments.repository.PersonRepository;
+import com.project.appointments.repository.ScheduleRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ public class AppointmentService {
 
   private final AppointmentRepository appointmentRepository;
   private final PersonRepository personRepository;
+  private final ScheduleRepository scheduleRepository;
 
   public List<Appointment> getAppointments() {
     return appointmentRepository.findAll();
@@ -46,10 +50,13 @@ public class AppointmentService {
     appointmentRepository.deleteById(id);
     return appointment;
   }
-  public Appointment reserveAppointment(Long id,String personPhone){
-    Appointment appointment = findAppointmentById(id);
+
+  public Appointment reserveAppointment(Long appointmentId, Long personId) {
+    Appointment appointment = findAppointmentById(appointmentId);
     reservationValidation(appointment);
-    Person person = personRepository.findByPhone(personPhone).orElseThrow(()->{throw new EntityNotFoundException("Person was not found by person");});
+    Person person = personRepository.findById(personId).orElseThrow(() -> {
+      throw new EntityNotFoundException("Person was not found by phone");
+    });
     appointmentRepository.save(appointment.setStatus(AppointmentStatus.RESERVED).setPersonId(
         person.getId()));
     return appointment;
@@ -68,9 +75,17 @@ public class AppointmentService {
           .setStartTime(startTime).setEndTime(startTime.plusMinutes(30)).setScheduleId(scheduleId));
     }
   }
-  private void reservationValidation(Appointment appointment){
-    if(appointment.getStatus().equals(AppointmentStatus.RESERVED)){
+
+  private void reservationValidation(Appointment appointment) {
+    Schedule schedule = scheduleRepository.findById(appointment.getScheduleId()).orElseThrow(() -> {
+      throw new EntityNotFoundException("Connected schedule was not found by id");
+    });
+    if (appointment.getStatus().equals(AppointmentStatus.RESERVED)) {
       throw new AppointmentAlreadyReserved("This Appointment already reserved");
+    } else if (LocalDate.now().isAfter(schedule.getDate()) || (
+        LocalDate.now().isEqual(schedule.getDate()) && LocalTime.now()
+            .isAfter(appointment.getStartTime()))) {
+      throw new AppointmentAlreadyReserved("You are late to reserve this appointment");
     }
   }
 }
