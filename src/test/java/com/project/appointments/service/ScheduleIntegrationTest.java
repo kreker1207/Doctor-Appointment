@@ -5,9 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.project.appointments.Application;
 
 import com.project.appointments.model.entity.Schedule;
-import com.project.appointments.model.entity.UtilityDateSet;
+import com.project.appointments.model.entity.TimeOffsetRequest;
 import com.project.appointments.repository.ScheduleH2Repository;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,8 @@ public class ScheduleIntegrationTest {
 
   @Autowired
   private ScheduleService scheduleService;
+  @Autowired
+  private TimeService timeService;
   @Autowired
   private ScheduleH2Repository scheduleH2Repository;
 
@@ -80,8 +83,9 @@ public class ScheduleIntegrationTest {
   @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeDaysMonday() {
     assertEquals(0, scheduleService.getSchedule().size());
-    scheduleService.generateScheduleForThreeDaysTest(1L,
-        UtilityDateSet.someDate = LocalDate.of(2022, 12, 5));
+
+    timeService.setTimeOffset(new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022,12,5,1,0)));
+    scheduleService.generateScheduleForThreeDays(1L);
     List<Schedule> foundSchedule = scheduleService.getSchedule();
     assertEquals(3, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 5), foundSchedule.get(0).getDate());
@@ -93,8 +97,8 @@ public class ScheduleIntegrationTest {
   @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeThursday() {
     assertEquals(0, scheduleService.getSchedule().size());
-    scheduleService.generateScheduleForThreeDaysTest(1L,
-        UtilityDateSet.someDate = LocalDate.of(2022, 12, 8));
+    timeService.setTimeOffset(new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022,12,8,1,0)));
+    scheduleService.generateScheduleForThreeDays(1L);
     List<Schedule> foundSchedule = scheduleService.getSchedule();
     assertEquals(3, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 8), foundSchedule.get(0).getDate());
@@ -106,8 +110,8 @@ public class ScheduleIntegrationTest {
   @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeFriday() {
     assertEquals(0, scheduleService.getSchedule().size());
-    scheduleService.generateScheduleForThreeDaysTest(1L,
-        UtilityDateSet.someDate = LocalDate.of(2022, 12, 9));
+    timeService.setTimeOffset(new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022,12,9,1,0)));
+    scheduleService.generateScheduleForThreeDays(1L);
     List<Schedule> foundSchedule = scheduleService.getSchedule();
     assertEquals(3, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 9), foundSchedule.get(0).getDate());
@@ -119,8 +123,8 @@ public class ScheduleIntegrationTest {
   @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeSaturday() {
     assertEquals(0, scheduleService.getSchedule().size());
-    scheduleService.generateScheduleForThreeDaysTest(1L,
-        UtilityDateSet.someDate = LocalDate.of(2022, 12, 10));
+    timeService.setTimeOffset(new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022,12,10,1,0)));
+    scheduleService.generateScheduleForThreeDays(1L);
     List<Schedule> foundSchedule = scheduleService.getSchedule();
     assertEquals(3, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 12), foundSchedule.get(0).getDate());
@@ -132,8 +136,8 @@ public class ScheduleIntegrationTest {
   @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeSunday() {
     assertEquals(0, scheduleService.getSchedule().size());
-    scheduleService.generateScheduleForThreeDaysTest(1L,
-        UtilityDateSet.someDate = LocalDate.of(2022, 12, 11));
+    timeService.setTimeOffset(new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022,12,11,1,0)));
+    scheduleService.generateScheduleForThreeDays(1L);
     List<Schedule> foundSchedule = scheduleService.getSchedule();
     assertEquals(3, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 12), foundSchedule.get(0).getDate());

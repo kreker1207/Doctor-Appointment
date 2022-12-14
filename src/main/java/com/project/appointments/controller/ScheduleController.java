@@ -2,7 +2,6 @@ package com.project.appointments.controller;
 
 import com.project.appointments.model.entity.Schedule;
 import com.project.appointments.service.ScheduleService;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -57,10 +56,5 @@ public class ScheduleController {
   @ResponseStatus(HttpStatus.OK)
   public void generateScheduleForDoctor(@PathVariable Long id) {
     scheduleService.generateScheduleForThreeDays(id);
-  }
-  @PostMapping("/generate/test/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public void generateScheduleForDoctorTest(@PathVariable Long id,@RequestBody LocalDate someDate) {
-    scheduleService.generateScheduleForThreeDaysTest(id,someDate);
   }
 }

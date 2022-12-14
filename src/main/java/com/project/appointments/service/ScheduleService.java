@@ -1,10 +1,12 @@
 package com.project.appointments.service;
 
 import com.project.appointments.model.entity.Schedule;
+import com.project.appointments.model.entity.UtilityDateSet;
 import com.project.appointments.repository.ScheduleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,17 +40,14 @@ public class ScheduleService {
     return schedule;
   }
   public void generateScheduleForThreeDays(Long doctorId){
-    LocalDate date = LocalDate.now();
+    LocalDateTime date = LocalDateTime.now().plus(UtilityDateSet.offset, ChronoUnit.MILLIS);
     scheduleSaveCycle(date,doctorId);
   }
-  public void generateScheduleForThreeDaysTest(Long doctorId,LocalDate date){
-    scheduleSaveCycle(date,doctorId);
-  }
-  private void scheduleSaveCycle(LocalDate date,Long doctorId){
+  private void scheduleSaveCycle(LocalDateTime date,Long doctorId){
     for(int i = 0; i<3;i++){
       date = weekendValidation(date);
-      if (scheduleRepository.findByDoctorIdAndDate(doctorId,date).isEmpty()) {
-        Schedule schedule = scheduleRepository.save(new Schedule().setDate(date))
+      if (scheduleRepository.findByDoctorIdAndDate(doctorId,date.toLocalDate()).isEmpty()) {
+        Schedule schedule = scheduleRepository.save(new Schedule().setDate(date.toLocalDate()))
             .setDoctorId(doctorId);
         appointmentService.generateAppointmentsForDay(schedule.getId());
       }
@@ -60,7 +59,7 @@ public class ScheduleService {
       throw new EntityNotFoundException("Schedule was not found by id");
     });
   }
-  private LocalDate weekendValidation(LocalDate date){
+  private LocalDateTime weekendValidation(LocalDateTime date){
     if(date.getDayOfWeek() == DayOfWeek.SUNDAY){
       return date.plusDays(1);
     }

@@ -5,12 +5,14 @@ import com.project.appointments.model.entity.Appointment;
 import com.project.appointments.model.entity.AppointmentStatus;
 import com.project.appointments.model.entity.Person;
 import com.project.appointments.model.entity.Schedule;
+import com.project.appointments.model.entity.UtilityDateSet;
 import com.project.appointments.repository.AppointmentRepository;
 import com.project.appointments.repository.PersonRepository;
 import com.project.appointments.repository.ScheduleRepository;
 import jakarta.persistence.EntityNotFoundException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -77,14 +79,17 @@ public class AppointmentService {
   }
 
   private void reservationValidation(Appointment appointment) {
+    LocalDateTime localDateTime = LocalDateTime.now()
+        .plus(UtilityDateSet.offset, ChronoUnit.MILLIS);
     Schedule schedule = scheduleRepository.findById(appointment.getScheduleId()).orElseThrow(() -> {
       throw new EntityNotFoundException("Connected schedule was not found by id");
     });
     if (appointment.getStatus().equals(AppointmentStatus.RESERVED)) {
       throw new AppointmentAlreadyReserved("This Appointment already reserved");
-    } else if (LocalDate.now().isAfter(schedule.getDate()) || (
-        LocalDate.now().isEqual(schedule.getDate()) && LocalTime.now()
-            .isAfter(appointment.getStartTime()))) {
+    } else if (
+        localDateTime.toLocalDate().isAfter(schedule.getDate()) || (localDateTime.toLocalDate()
+                .isEqual(schedule.getDate()) && localDateTime.toLocalTime()
+                .isAfter(appointment.getStartTime()))) {
       throw new AppointmentAlreadyReserved("You are late to reserve this appointment");
     }
   }
