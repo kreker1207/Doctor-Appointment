@@ -1,18 +1,18 @@
 package com.project.appointments.service;
 
+import static com.project.appointments.model.entity.TimeSetter.defineLocalDayTimeWithOffset;
+
 import com.project.appointments.exception.AppointmentAlreadyReserved;
 import com.project.appointments.model.entity.Appointment;
 import com.project.appointments.model.entity.AppointmentStatus;
 import com.project.appointments.model.entity.Person;
 import com.project.appointments.model.entity.Schedule;
-import com.project.appointments.model.entity.TimeSetter;
 import com.project.appointments.repository.AppointmentRepository;
 import com.project.appointments.repository.PersonRepository;
 import com.project.appointments.repository.ScheduleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -79,8 +79,7 @@ public class AppointmentService {
   }
 
   private void reservationValidation(Appointment appointment) {
-    LocalDateTime localDateTime = LocalDateTime.now()
-        .plus(TimeSetter.offset, ChronoUnit.MILLIS);
+    LocalDateTime localDateTime = defineLocalDayTimeWithOffset();
     Schedule schedule = scheduleRepository.findById(appointment.getScheduleId()).orElseThrow(() -> {
       throw new EntityNotFoundException("Connected schedule was not found by id");
     });

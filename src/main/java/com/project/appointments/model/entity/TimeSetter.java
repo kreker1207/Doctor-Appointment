@@ -9,4 +9,7 @@ public class TimeSetter {
     TimeSetter.offset = ChronoUnit.MILLIS.between(LocalDateTime.now(),timeOffsetRequest.getLocalDateTimeOffset());
     return TimeSetter.offset;
   }
+  public static LocalDateTime defineLocalDayTimeWithOffset(){
+    return LocalDateTime.now().plus(TimeSetter.offset, ChronoUnit.MILLIS);
+  }
 }
