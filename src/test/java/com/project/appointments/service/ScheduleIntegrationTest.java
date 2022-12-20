@@ -1,15 +1,17 @@
 package com.project.appointments.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.project.appointments.Application;
 
 import com.project.appointments.model.entity.Schedule;
 import com.project.appointments.model.entity.TimeOffsetRequest;
+import com.project.appointments.model.entity.TimeSetter;
 import com.project.appointments.repository.ScheduleH2Repository;
+import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,8 +29,6 @@ public class ScheduleIntegrationTest {
   @Autowired
   private ScheduleService scheduleService;
   @Autowired
-  private TimeService timeService;
-  @Autowired
   private ScheduleH2Repository scheduleH2Repository;
 
   @AfterEach
@@ -37,8 +37,8 @@ public class ScheduleIntegrationTest {
   }
 
   @Test
-  void createSchedule() {
-    Schedule schedule = new Schedule().setId(1L).setDoctorId(null)
+  void addSchedule_success() {
+    var schedule = new Schedule().setId(1L).setDoctorId(null)
         .setDate(LocalDate.of(2022, 12, 12));
     assertEquals(0, scheduleH2Repository.findAll().size());
     scheduleService.addSchedule(schedule);
@@ -47,17 +47,24 @@ public class ScheduleIntegrationTest {
 
   @Test
   @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2022-12-13')")
-  void getSchedule() {
+  void getSchedule_success() {
     assertEquals(1, scheduleService.getSchedule().size());
-    Schedule foundSchedule = scheduleService.getSchedule(1L);
+    var foundSchedule = scheduleService.getSchedule(1L);
     assertEquals(LocalDate.of(2022, 12, 13), foundSchedule.getDate());
+  }
+  @Test
+  void getScheduleNotFound_fail() {
+    EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class,()->{
+      scheduleService.getSchedule(1L);
+    },"Schedule was not found by id");
+    assertEquals("Schedule was not found by id", thrown.getMessage());
   }
 
   @Test
   @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2022-12-13')")
   @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (2,null,'2022-12-14')")
-  void getSchedules() {
-    List<Schedule> foundSchedule = scheduleService.getSchedule();
+  void getSchedules_success() {
+    var foundSchedule = scheduleService.getSchedule();
     assertEquals(2, scheduleH2Repository.findAll().size());
     assertEquals(2, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 14), foundSchedule.get(1).getDate());
@@ -65,28 +72,41 @@ public class ScheduleIntegrationTest {
 
   @Test
   @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2022-12-13')")
-  void deleteSchedule() {
+  void deleteSchedule_success() {
     assertEquals(1, scheduleService.getSchedule().size());
     scheduleService.deleteSchedule(1L);
     assertEquals(0, scheduleService.getSchedule().size());
   }
-
+  @Test
+  void deleteScheduleNotFound_fail() {
+    EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class,()->{
+      scheduleService.getSchedule(1L);
+    },"Schedule was not found by id");
+    assertEquals("Schedule was not found by id", thrown.getMessage());
+  }
   @Test
   @Sql(statements = "INSERT INTO schedule (id, doctor_id, date) VALUES (1,null,'2022-12-13')")
-  void updateSchedule() {
+  void updateSchedule_success() {
     assertEquals(LocalDate.of(2022, 12, 13), scheduleService.getSchedule(1L).getDate());
     scheduleService.updateSchedule(new Schedule().setDate(LocalDate.of(2022, 12, 15)), 1L);
     assertEquals(LocalDate.of(2022, 12, 15), scheduleService.getSchedule(1L).getDate());
+  }
+  @Test
+  void updateScheduleNotFound_fail() {
+    EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class,()->{
+      scheduleService.getSchedule(1L);
+    },"Schedule was not found by id");
+    assertEquals("Schedule was not found by id", thrown.getMessage());
   }
 
   @Test
   @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeDaysMonday() {
     assertEquals(0, scheduleService.getSchedule().size());
-
-    timeService.setTimeOffset(new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022,12,5,1,0)));
+    TimeSetter.setTimeOffset(
+        new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022, 12, 5, 1, 0)));
     scheduleService.generateScheduleForThreeDays(1L);
-    List<Schedule> foundSchedule = scheduleService.getSchedule();
+    var foundSchedule = scheduleService.getSchedule();
     assertEquals(3, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 5), foundSchedule.get(0).getDate());
     assertEquals(LocalDate.of(2022, 12, 6), foundSchedule.get(1).getDate());
@@ -97,9 +117,10 @@ public class ScheduleIntegrationTest {
   @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeThursday() {
     assertEquals(0, scheduleService.getSchedule().size());
-    timeService.setTimeOffset(new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022,12,8,1,0)));
+    TimeSetter.setTimeOffset(
+        new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022, 12, 8, 1, 0)));
     scheduleService.generateScheduleForThreeDays(1L);
-    List<Schedule> foundSchedule = scheduleService.getSchedule();
+    var foundSchedule = scheduleService.getSchedule();
     assertEquals(3, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 8), foundSchedule.get(0).getDate());
     assertEquals(LocalDate.of(2022, 12, 9), foundSchedule.get(1).getDate());
@@ -110,9 +131,10 @@ public class ScheduleIntegrationTest {
   @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeFriday() {
     assertEquals(0, scheduleService.getSchedule().size());
-    timeService.setTimeOffset(new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022,12,9,1,0)));
+    TimeSetter.setTimeOffset(
+        new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022, 12, 9, 1, 0)));
     scheduleService.generateScheduleForThreeDays(1L);
-    List<Schedule> foundSchedule = scheduleService.getSchedule();
+    var foundSchedule = scheduleService.getSchedule();
     assertEquals(3, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 9), foundSchedule.get(0).getDate());
     assertEquals(LocalDate.of(2022, 12, 12), foundSchedule.get(1).getDate());
@@ -123,9 +145,10 @@ public class ScheduleIntegrationTest {
   @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeSaturday() {
     assertEquals(0, scheduleService.getSchedule().size());
-    timeService.setTimeOffset(new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022,12,10,1,0)));
+    TimeSetter.setTimeOffset(
+        new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022, 12, 10, 1, 0)));
     scheduleService.generateScheduleForThreeDays(1L);
-    List<Schedule> foundSchedule = scheduleService.getSchedule();
+    var foundSchedule = scheduleService.getSchedule();
     assertEquals(3, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 12), foundSchedule.get(0).getDate());
     assertEquals(LocalDate.of(2022, 12, 13), foundSchedule.get(1).getDate());
@@ -136,9 +159,10 @@ public class ScheduleIntegrationTest {
   @Sql(statements = "INSERT INTO doctor (id, first_name, last_name, specialization, phone)  VALUES (1,'Iven','Baranetskyi','Orthopeadic','+1234567')")
   void generateScheduleForThreeSunday() {
     assertEquals(0, scheduleService.getSchedule().size());
-    timeService.setTimeOffset(new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022,12,11,1,0)));
+    TimeSetter.setTimeOffset(
+        new TimeOffsetRequest().setLocalDateTimeOffset(LocalDateTime.of(2022, 12, 11, 1, 0)));
     scheduleService.generateScheduleForThreeDays(1L);
-    List<Schedule> foundSchedule = scheduleService.getSchedule();
+    var foundSchedule = scheduleService.getSchedule();
     assertEquals(3, foundSchedule.size());
     assertEquals(LocalDate.of(2022, 12, 12), foundSchedule.get(0).getDate());
     assertEquals(LocalDate.of(2022, 12, 13), foundSchedule.get(1).getDate());

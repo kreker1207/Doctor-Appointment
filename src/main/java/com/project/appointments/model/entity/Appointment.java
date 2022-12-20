@@ -12,11 +12,13 @@ import jakarta.persistence.Table;
 import java.time.LocalTime;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
 
 @Data
 @Entity
 @Accessors(chain = true)
 @Table(name = "appointment")
+@FieldNameConstants
 public class Appointment {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

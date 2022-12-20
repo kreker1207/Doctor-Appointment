@@ -1,7 +1,7 @@
 package com.project.appointments.service;
 
 import com.project.appointments.model.entity.Schedule;
-import com.project.appointments.model.entity.UtilityDateSet;
+import com.project.appointments.model.entity.TimeSetter;
 import com.project.appointments.repository.ScheduleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.DayOfWeek;
@@ -40,7 +40,7 @@ public class ScheduleService {
     return schedule;
   }
   public void generateScheduleForThreeDays(Long doctorId){
-    LocalDateTime date = LocalDateTime.now().plus(UtilityDateSet.offset, ChronoUnit.MILLIS);
+    LocalDateTime date = LocalDateTime.now().plus(TimeSetter.offset, ChronoUnit.MILLIS);
     scheduleSaveCycle(date,doctorId);
   }
   private void scheduleSaveCycle(LocalDateTime date,Long doctorId){
