@@ -80,7 +80,7 @@ public class ScheduleIntegrationTest {
   @Test
   void deleteScheduleNotFound_fail() {
     EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class,()->{
-      scheduleService.getSchedule(1L);
+      scheduleService.deleteSchedule(1L);
     },"Schedule was not found by id");
     assertEquals("Schedule was not found by id", thrown.getMessage());
   }
@@ -94,7 +94,7 @@ public class ScheduleIntegrationTest {
   @Test
   void updateScheduleNotFound_fail() {
     EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class,()->{
-      scheduleService.getSchedule(1L);
+      scheduleService.updateSchedule(new Schedule().setDate(LocalDate.of(2022, 12, 15)),1L);
     },"Schedule was not found by id");
     assertEquals("Schedule was not found by id", thrown.getMessage());
   }

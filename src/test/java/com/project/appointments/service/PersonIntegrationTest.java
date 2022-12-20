@@ -81,7 +81,7 @@ public class PersonIntegrationTest {
   @Test
   void deletePersonNotFound_fail() {
     EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class,()->{
-      personService.getPerson(1L);
+      personService.deletePerson(1L);
     },"Person was not found by id");
     assertEquals("Person was not found by id", thrown.getMessage());
   }
@@ -98,7 +98,7 @@ public class PersonIntegrationTest {
   @Test
   void updatePersonNotFound_fail() {
     EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class,()->{
-      personService.getPerson(1L);
+      personService.updatePerson(createPerson(),1L);
     },"Person was not found by id");
     assertEquals("Person was not found by id", thrown.getMessage());
   }

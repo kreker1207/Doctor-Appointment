@@ -81,7 +81,7 @@ public class DoctorIntegrationTest {
   @Test
   void deleteDoctorNotFound_fail() {
     EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class,()->{
-      doctorService.getDoctor(1L);
+      doctorService.deleteDoctor(1L);
     },"Doctor was not found by id");
     assertEquals("Doctor was not found by id", thrown.getMessage());
   }
@@ -99,7 +99,7 @@ public class DoctorIntegrationTest {
   @Test
   void updateDoctorNotFound_fail() {
     EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class,()->{
-      doctorService.getDoctor(1L);
+      doctorService.updateDoctor(createDoctor(),1L);
     },"Doctor was not found by id");
     assertEquals("Doctor was not found by id", thrown.getMessage());
   }
